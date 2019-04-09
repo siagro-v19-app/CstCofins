@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"br/com/idxtecCstCofins/model/models"
-], function(UIComponent, Device, models) {
+	"br/com/idxtecCstCofins/model/models",
+	"br/com/idxtecCstCofins/services/ErrorHandler"
+], function(UIComponent, Device, models, ErrorHandler) {
 	"use strict";
 
 	return UIComponent.extend("br.com.idxtecCstCofins.Component", {
@@ -11,17 +12,20 @@ sap.ui.define([
 			manifest: "json"
 		},
 
-		/**
-		 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
-		 * @public
-		 * @override
-		 */
 		init: function() {
-			// call the base component's init function
+			
+			this._oErrorHandler = new ErrorHandler(this);
 			UIComponent.prototype.init.apply(this, arguments);
 
 			// set the device model
-				this.setModel(models.createViewModel(), "view");
+			this.setModel(models.createDeviceModel(), "device");
+			this.setModel(models.createViewModel(), "view");
+		},
+		
+		destroy: function(){
+			this._oErrorHandler.destroy();
+			
+			UIComponent.prototype.destroy.apply(this, arguments);
 		},
 		
 		getContentDensityClass: function(){
