@@ -1,7 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/m/MessageBox"
-], function(Controller, MessageBox) {
+	"sap/m/MessageBox",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
+], function(Controller, MessageBox, Filter, FilterOperator) {
 	"use strict";
 
 	return Controller.extend("br.com.idxtecCstCofins.controller.CstCofins", {
@@ -9,10 +11,21 @@ sap.ui.define([
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 		},
 		
+		filtraCofins: function(oEvent){
+			var sQuery = oEvent.getParameter("query");
+			var oFilter = new Filter("Codigo", FilterOperator.Contains, sQuery);
+			
+			var aFilters = [
+				oFilter
+			];
+
+			this.getView().byId("tableCstCofins").getBinding("rows").filter(aFilters, "Application");
+		},
+		
 		onRefresh: function(){
 			var oModel = this.getOwnerComponent().getModel();
-			
 			oModel.refresh(true);
+			this.getView().byId("tableCstCofins").clearSelection();
 		},
 		
 		onIncluir: function(){
