@@ -27,7 +27,7 @@
 							<Toolbar>
 								<Title text="Lista de COFINS"/>
 								<ToolbarSpacer/>
-								<SearchField placeholder="Pesquisar COFINS..." width="30%" search="filtraCofins"/>
+								<SearchField placeholder="Pesquisar código..." width="30%" search="filtraCofins"/>
 							</Toolbar>
 						</t:toolbar>
 						<t:columns>
